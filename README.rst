@@ -29,15 +29,15 @@ Add the ``cmdclass`` keyword to the setup:
         ...
     )
 
-.. note:: the function :py:func:`get_cmdclass` force using ``wheel`` as default format
-          (recommended format for binary distribution). This behavior can be disabled
-          by setting ``wheel_default=False``.
+.. note:: the function ``get_cmdclass()`` force **wheel** as default format
+          (recommended format for binary distribution). This behavior can be
+          disabled by setting ``wheel_default=False``.
 
 Call the ``setup.py`` file to generate the package::
 
      $> python setup.py bdist --cythonize
 
-Package can be excluded from the *cythonization* by setting the ``exclude_cythonize``
+Some packages can be excluded from the *cythonization* by setting the ``exclude_cythonize``
 option. The module matching is done using the function
 `fnmatch.fnmatchcase <https://docs.python.org/3/library/fnmatch.html#fnmatch.fnmatchcase>`_ .
 
