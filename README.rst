@@ -12,8 +12,8 @@ Install
      $> sudo pip install setuptools-cythonize
 
 
-Usage
------
+Setup configuration
+-------------------
 
 Add the ``cmdclass`` keyword to the setup:
 
@@ -33,17 +33,11 @@ Add the ``cmdclass`` keyword to the setup:
           (recommended format for binary distribution). This behavior can be
           disabled by setting ``wheel_default=False``.
 
-Call the ``setup.py`` file to generate the package::
-
-     $> python setup.py bdist --cythonize
-
 Some packages can be excluded from the *cythonization* by setting the ``exclude_cythonize``
 option. The module matching is done using the function
 `fnmatch.fnmatchcase <https://docs.python.org/3/library/fnmatch.html#fnmatch.fnmatchcase>`_ .
 
 .. code-block:: python
-
-    from setuptools_cythonize import get_cmdclass
 
     setup(
         cmdclass=get_cmdclass(),
@@ -55,3 +49,12 @@ option. The module matching is done using the function
         },
         ...
     )
+
+Packaging
+---------
+
+Call the ``setup.py`` file to generate the package, all Python modules
+(except the ones defined in ``exclude_cythonize``) will be compiled
+and packaged::
+
+     $> python setup.py bdist --cythonize
