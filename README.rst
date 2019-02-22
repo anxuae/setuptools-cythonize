@@ -9,7 +9,7 @@ Install
 
 ::
 
-     $> sudo pip install setuptools-cythonize
+     $> pip install setuptools-cythonize
 
 
 Setup configuration
@@ -31,7 +31,7 @@ Add the ``cmdclass`` keyword to the setup:
 
 .. note:: the function ``get_cmdclass()`` force **wheel** as default format
           (recommended format for binary distribution). This behavior can be
-          disabled by setting ``wheel_default=False``.
+          disabled by passing the parameter ``wheel_default=False``.
 
 Some packages can be excluded from the *cythonization* by setting the ``exclude_cythonize``
 option. The module matching is done using the function
