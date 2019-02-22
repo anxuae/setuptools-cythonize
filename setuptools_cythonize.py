@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+"""
+Distribute python application in a binary format (compilation based on Cython) 
+"""
+
 import platform
 from fnmatch import fnmatchcase
 from distutils import log
