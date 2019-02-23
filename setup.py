@@ -16,7 +16,7 @@ def main():
     setup(
         name="setuptools-cythonize",
         version=setuptools_cythonize.__version__,
-        description=setuptools_cythonize.__doc__,
+        description=setuptools_cythonize.__doc__.strip(),
         long_description=open(osp.join(HERE, 'README.rst'), encoding='utf-8').read(),
         classifiers=[
             'Development Status :: 5 - Production/Stable',
