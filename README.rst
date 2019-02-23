@@ -1,5 +1,9 @@
 
 
+.. image:: https://raw.githubusercontent.com/anxuae/setuptools-cythonize/master/docs/cythonize.png
+   :align: center
+   :alt: setuptools-cythonize
+
 The ``setuptools-cythonize`` project attempts to provide ``distutils`` commands
 to compile **Python** code into **C** code using ``Cython``. The generated code
 is packaged into a platform dependent archive.

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Distribute python application in a binary format (compilation based on Cython) 
+Distribute python libraries/applications in a binary format (compilation based on Cython)
 """
 
 import platform
@@ -15,7 +15,6 @@ from setuptools.command.build_py import build_py
 from setuptools.command.install import install
 from setuptools.command.build_ext import build_ext
 
-import wheel
 from wheel.bdist_wheel import bdist_wheel
 
 from Cython.Distutils import Extension
@@ -152,6 +151,11 @@ class CythonizedInstall(install):
 
 class CythonizedBdist(bdist):
 
+    """
+    This patch add the option :option:`--cythonize` to the bdist
+    command and configure 'wheel' as default format.
+    """
+
     user_options = bdist.user_options + [('cythonize', None, 'compile pure python file using cython')]
     boolean_options = bdist.boolean_options + ['cythonize']
 
@@ -159,11 +163,11 @@ class CythonizedBdist(bdist):
     def set_default_wheel_format(cls):
         """Set 'wheel' as default format.
         """
-        if wheel.__name__ not in cls.format_commands:
-            bdist.format_command['wheel'] = ('bdist_wheel', "Python .whl file")
-            bdist.format_commands.append('wheel')
-            for keyos in bdist.default_format:
-                bdist.default_format[keyos] = 'wheel'
+        if "wheel" not in cls.format_commands:
+            cls.format_command['wheel'] = ('bdist_wheel', "Python .whl file")
+            cls.format_commands.append('wheel')
+            for keyos in cls.default_format:
+                cls.default_format[keyos] = 'wheel'
 
     def initialize_options(self):
         bdist.initialize_options(self)
@@ -178,6 +182,11 @@ class CythonizedBdist(bdist):
 
 
 class CythonizedBdistWheel(bdist_wheel):
+
+    """
+    This patch add the option :option:`--cythonize` to the bdist_wheel
+    command.
+    """
 
     user_options = bdist_wheel.user_options + [('cythonize', None, 'compile pure python file using cython')]
     boolean_options = bdist_wheel.boolean_options + ['cythonize']
@@ -198,15 +207,13 @@ class CythonizedBdistWheel(bdist_wheel):
 
 
 def get_cmdclass(wheel_default=True):
-    cmdclass = {'build': CythonizedBuild,
-                'build_py': CythonizedBuildPy,
-                'build_ext': build_ext,
-                'bdist': CythonizedBdist,
-                'install': CythonizedInstall}
 
     if wheel_default:
         CythonizedBdist.set_default_wheel_format()
 
-    cmdclass['bdist_wheel'] = CythonizedBdistWheel
-
-    return cmdclass
+    return {'build': CythonizedBuild,
+            'build_py': CythonizedBuildPy,
+            'build_ext': build_ext,
+            'bdist': CythonizedBdist,
+            'bdist_wheel': CythonizedBdistWheel,
+            'install': CythonizedInstall}
