@@ -21,7 +21,7 @@ from Cython.Distutils import Extension
 from Cython.Compiler import Options as cython_options
 
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 
 class CythonizedBuild(build, object):  # 'object' inheritance permits @property usage
