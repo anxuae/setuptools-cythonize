@@ -54,6 +54,10 @@ option. The module matching is done using the function
         ...
     )
 
+.. note:: all Python modules starting with ``__`` are excluded from the cythonization
+          process, this include the ``__init__.py`` file which are mandatory to keep
+          the Python packages integrity.
+
 Packaging
 ---------
 

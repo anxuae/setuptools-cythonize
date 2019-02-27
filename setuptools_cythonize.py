@@ -112,7 +112,8 @@ class CythonizedBuildPy(build_py):
         return build_py.build_module(self, module_name, module_file, package_name)
 
     def is_to_cythonize(self, package_name, module_name):
-        """Return True is the given module has to be compiled.
+        """Return True if the given module has to be compiled (i.e. does not
+        start with ``__``).
         """
         if not self.cythonize:
             return False
@@ -122,7 +123,6 @@ class CythonizedBuildPy(build_py):
             pkgmod = '.'.join([package_name, module_name])
             for pat in self.exclude_cythonize:
                 if fnmatchcase(pkgmod, pat):
-                    print(pkgmod + '=' + pat)
                     cythonize = False
         return cythonize and not module_name.startswith('__')
 
