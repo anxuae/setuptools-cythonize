@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Distribute python libraries/applications in a binary format (compilation based on Cython)
+Distribute python modules/packages as binary files (compilation based on Cython)
 """
 
 import platform
