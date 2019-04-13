@@ -2,7 +2,6 @@
 
 .. image:: https://raw.githubusercontent.com/anxuae/setuptools-cythonize/master/docs/cythonize.png
    :align: center
-   :height: 60px
    :alt: setuptools-cythonize
 
 The ``setuptools-cythonize`` provideS ``distutils`` classes to compile **Python** source code into
