@@ -21,10 +21,10 @@ from Cython.Distutils import Extension
 from Cython.Compiler import Options as cython_options
 
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 
-class CythonizedBuild(build, object):  # 'object' inheritance permits @property usage
+class CythonizeBuild(build, object):  # 'object' inheritance permits @property usage
 
     """
     This patch ensure that extension will be built even if there
@@ -60,7 +60,7 @@ class CythonizedBuild(build, object):  # 'object' inheritance permits @property 
             self.compiler = 'mingw32'
 
 
-class CythonizedBuildPy(build_py):
+class CythonizeBuildPy(build_py):
 
     """
     This patch moves python files from build_py to build_ext (handled by Cython)
@@ -127,7 +127,7 @@ class CythonizedBuildPy(build_py):
         return cythonize and not module_name.startswith('__')
 
 
-class CythonizedInstall(install):
+class CythonizeInstall(install):
 
     """
     This patch add the option :option:`--cythonize` to the install
@@ -149,7 +149,7 @@ class CythonizedInstall(install):
             build_cmd.cythonize = self.cythonize
 
 
-class CythonizedBdist(bdist):
+class CythonizeBdist(bdist):
 
     """
     This patch add the option :option:`--cythonize` to the bdist
@@ -181,7 +181,7 @@ class CythonizedBdist(bdist):
             build_cmd.cythonize = self.cythonize
 
 
-class CythonizedBdistWheel(bdist_wheel):
+class CythonizeBdistWheel(bdist_wheel):
 
     """
     This patch add the option :option:`--cythonize` to the bdist_wheel
@@ -209,11 +209,11 @@ class CythonizedBdistWheel(bdist_wheel):
 def get_cmdclass(wheel_default=True):
 
     if wheel_default:
-        CythonizedBdist.set_default_wheel_format()
+        CythonizeBdist.set_default_wheel_format()
 
-    return {'build': CythonizedBuild,
-            'build_py': CythonizedBuildPy,
+    return {'build': CythonizeBuild,
+            'build_py': CythonizeBuildPy,
             'build_ext': build_ext,
-            'bdist': CythonizedBdist,
-            'bdist_wheel': CythonizedBdistWheel,
-            'install': CythonizedInstall}
+            'bdist': CythonizeBdist,
+            'bdist_wheel': CythonizeBdistWheel,
+            'install': CythonizeInstall}
