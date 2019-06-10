@@ -4,7 +4,7 @@
    :align: center
    :alt: setuptools-cythonize
 
-The ``setuptools-cythonize`` provideS ``distutils`` classes to compile **Python** source code into
+The ``setuptools-cythonize`` provides ``distutils`` classes to compile **Python** source code into
 **C** code using ``Cython``. The generated code is packaged into a platform dependent archive.
 
 .. image:: https://raw.githubusercontent.com/anxuae/setuptools-cythonize/master/docs/cythonization.png
@@ -61,8 +61,8 @@ option. The module names matching is done using the function
         ...
     )
 
-.. note:: all Python modules starting with ``__`` are excluded from the cythonization,
-          that include the ``__init__.py`` file which are mandatory to keep the Python
+.. note:: all Python modules starting with ``__`` are excluded from the cythonization.
+          This includes the ``__init__.py`` file which are mandatory to keep the Python
           packages integrity.
 
 Packaging
