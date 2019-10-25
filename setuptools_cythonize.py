@@ -5,6 +5,7 @@ Distribute python modules/packages as binary files (compilation based on Cython)
 """
 
 import platform
+import sys
 from fnmatch import fnmatchcase
 from distutils import log
 from distutils.dist import Distribution
@@ -96,7 +97,15 @@ class CythonizeBuildPy(build_py):
                 self.distribution.ext_modules = []
             for (pkg, mod, pth) in build_py.find_all_modules(self):
                 if self.is_to_cythonize(pkg, mod):
-                    self.distribution.ext_modules.append(Extension(".".join([pkg, mod]), [pth], cython_c_in_temp=True))
+                    self.distribution.ext_modules.append(
+                        Extension(
+                            ".".join([pkg, mod]),
+                            [pth],
+                            cython_c_in_temp=True,
+                            # Ensure cython compiles with a relevent language mode setting
+                            cython_directives={'language_level': sys.version[0]}
+                        )
+                    )
 
         return build_py.run(self)
 
