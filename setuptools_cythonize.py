@@ -4,8 +4,8 @@
 Distribute python modules/packages as binary files (compilation based on Cython)
 """
 
-import platform
 import sys
+import platform
 from fnmatch import fnmatchcase
 from distutils import log
 from distutils.dist import Distribution
@@ -22,7 +22,7 @@ from Cython.Distutils import Extension
 from Cython.Compiler import Options as cython_options
 
 
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 
 
 class CythonizeBuild(build, object):  # 'object' inheritance permits @property usage
