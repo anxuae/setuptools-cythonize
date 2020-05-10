@@ -6,6 +6,7 @@ name: Upload Python Package
 on:
   release:
     types: [created]
+    branches: [master]
 
 jobs:
   deploy:
@@ -29,4 +30,4 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
         twine check dist/*
-        twine upload dist/*
+        twine upload --skip-existing dist/*
