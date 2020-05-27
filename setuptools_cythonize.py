@@ -125,7 +125,7 @@ class CythonizeBuildPy(build_py):
             for pat in self.exclude_cythonize:
                 if fnmatchcase(pkgmod, pat):
                     cythonize = False
-        return cythonize and not module_name == '__init__'
+        return cythonize and module_name not in ['__init__', '__main__']
 
 
 class CythonizeInstall(install):

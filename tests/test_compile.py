@@ -81,8 +81,7 @@ def test_compile(testdir):
 
     files = list_wheel(wheel_file)
     assert osp.join('spam', '__init__.py') in files
-    assert not osp.join('spam', '__main__.py') in files
-    assert fnmatch.filter(files, osp.join('spam', '__main__*.so'))
+    assert osp.join('spam', '__main__.py') in files
     assert not osp.join('spam', 'ham.py') in files
     assert fnmatch.filter(files, osp.join('spam', 'ham*.so'))
     assert osp.join('spam', 'egg', '__init__.py') in files
