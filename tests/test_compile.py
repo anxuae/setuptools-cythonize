@@ -88,3 +88,22 @@ def test_compile(testdir):
     assert not osp.join('spam', 'egg', 'bean.py') in files
     assert fnmatch.filter(files, osp.join('spam', 'egg', 'bean*.so'))
     assert osp.join('spam', 'egg', 'sausage.py') in files
+
+
+def test_install(testdir):
+
+    setup_file = make_setup(testdir)
+
+    # Run all tests with pytest
+    result = testdir.run(sys.executable, setup_file, 'install', '--install-lib', 'installed', '--cythonize')
+    assert result.ret == 0
+
+    files = [str(p.relto(testdir.tmpdir.join('installed'))) for p in testdir.tmpdir.join('installed', 'spam').visit()]
+    assert osp.join('spam', '__init__.py') in files
+    assert osp.join('spam', '__main__.py') in files
+    assert not osp.join('spam', 'ham.py') in files
+    assert fnmatch.filter(files, osp.join('spam', 'ham*.so'))
+    assert osp.join('spam', 'egg', '__init__.py') in files
+    assert not osp.join('spam', 'egg', 'bean.py') in files
+    assert fnmatch.filter(files, osp.join('spam', 'egg', 'bean*.so'))
+    assert osp.join('spam', 'egg', 'sausage.py') in files

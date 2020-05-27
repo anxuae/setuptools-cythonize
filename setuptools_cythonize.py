@@ -98,7 +98,6 @@ class CythonizeBuildPy(build_py):
                             cython_directives={'language_level': sys.version[0]}
                         )
                     )
-
         return build_py.run(self)
 
     def find_all_modules(self):
@@ -148,6 +147,12 @@ class CythonizeInstall(install):
         build_cmd = self.get_finalized_command('build')
         if build_cmd.cythonize is None:
             build_cmd.cythonize = self.cythonize
+
+    def run(self):
+        # It seems absurd, but doing that force setuptools to execute the
+        # old-style "install" command instead of the "egg_install" one.
+        # This is due to frame inspection in setuptools.command.install.install.run()
+        super(CythonizeInstall, self).run()
 
 
 class CythonizeBdist(bdist):
