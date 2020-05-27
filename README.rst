@@ -67,6 +67,22 @@ option. The module names matching is done using the function
           This includes the ``__init__.py`` file which are mandatory to keep the Python
           packages integrity.
 
+The `Cython compiler options <https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-options>`_
+can also be customized before running the ``setup``:
+
+.. code-block:: python
+
+    from setuptools import setup
+
+    from Cython.Compiler import Options
+
+    Options.docstrings = False
+
+    setup(
+        ...
+    )
+
+
 Packaging
 ---------
 

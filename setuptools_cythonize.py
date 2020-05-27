@@ -19,7 +19,6 @@ from setuptools.command.build_ext import build_ext
 from wheel.bdist_wheel import bdist_wheel
 
 from Cython.Distutils import Extension
-from Cython.Compiler import Options as cython_options
 
 
 __version__ = "1.0.5"
@@ -81,13 +80,6 @@ class CythonizeBuildPy(build_py):
         self.set_undefined_options('build', ('cythonize', 'cythonize'))
 
         if self.cythonize:
-            # Embed source line position
-            cython_options.embed_pos_in_docstring = True
-            # Generate annotated HTML page for source files
-            cython_options.annotate = False
-            cython_options.fast_fail = True
-            cython_options.error_on_unknown_names = True
-
             self.compile = self.optimize = False  # noqa
 
     def run(self):
