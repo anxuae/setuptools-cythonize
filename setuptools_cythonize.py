@@ -22,7 +22,7 @@ from Cython.Distutils import Extension
 from Cython.Compiler import Options as cython_options
 
 
-__version__ = "1.0.4"
+__version__ = "1.0.5"
 
 
 class CythonizeBuild(build, object):  # 'object' inheritance permits @property usage
@@ -133,7 +133,7 @@ class CythonizeBuildPy(build_py):
             for pat in self.exclude_cythonize:
                 if fnmatchcase(pkgmod, pat):
                     cythonize = False
-        return cythonize and not module_name.startswith('__')
+        return cythonize and not module_name == '__init__'
 
 
 class CythonizeInstall(install):
