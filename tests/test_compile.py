@@ -2,8 +2,9 @@
 
 import sys
 import fnmatch
+import zipfile
 import os.path as osp
-from wheel_inspect import inspect_wheel
+from py.path import local
 
 
 def make_setup(testdir):
@@ -32,6 +33,21 @@ def make_setup(testdir):
     return setup_file
 
 
+def find_wheel(dirname, pattern='*.whl'):
+    """Return a wheel file matching the given pattern in the directory."""
+    if isinstance(dirname, str):
+        dirname = local(dirname)
+
+    for path in dirname.listdir():
+        if path.fnmatch(pattern):
+            return path
+
+
+def list_wheel(wheel_file):
+    """Return the list of file in the wheel."""
+    return [f.filename for f in zipfile.ZipFile(str(wheel_file)).filelist if f.filename.startswith("spam/")]
+
+
 def test_no_compile(testdir):
 
     setup_file = make_setup(testdir)
@@ -40,19 +56,16 @@ def test_no_compile(testdir):
     result = testdir.run(sys.executable, setup_file, 'bdist')
     assert result.ret == 0
 
-    for path in testdir.tmpdir.join('dist').listdir():
-        assert path.fnmatch('spam-0.0.0-py*-none-any.whl')
+    wheel_file = find_wheel(testdir.tmpdir.join('dist'), 'spam-0.0.0-py*-none-any.whl')
+    assert wheel_file
 
-        output = inspect_wheel(str(path))
-        assert output["dist_info"]["wheel"]["root_is_purelib"]
-
-        files = [r["path"] for r in output["dist_info"]["record"] if r["path"].startswith("spam/")]
-        assert osp.join('spam', '__init__.py') in files
-        assert osp.join('spam', '__main__.py') in files
-        assert osp.join('spam', 'ham.py') in files
-        assert osp.join('spam', 'egg', '__init__.py') in files
-        assert osp.join('spam', 'egg', 'bean.py') in files
-        assert osp.join('spam', 'egg', 'sausage.py') in files
+    files = list_wheel(wheel_file)
+    assert osp.join('spam', '__init__.py') in files
+    assert osp.join('spam', '__main__.py') in files
+    assert osp.join('spam', 'ham.py') in files
+    assert osp.join('spam', 'egg', '__init__.py') in files
+    assert osp.join('spam', 'egg', 'bean.py') in files
+    assert osp.join('spam', 'egg', 'sausage.py') in files
 
 
 def test_compile(testdir):
@@ -63,19 +76,16 @@ def test_compile(testdir):
     result = testdir.run(sys.executable, setup_file, 'bdist', '--cythonize')
     assert result.ret == 0
 
-    for path in testdir.tmpdir.join('dist').listdir():
-        assert path.fnmatch('spam-0.0.0-cp*-cp*m-*.whl')
+    wheel_file = find_wheel(testdir.tmpdir.join('dist'), 'spam-0.0.0-cp*-cp*m-*.whl')
+    assert wheel_file
 
-        output = inspect_wheel(str(path))
-        assert not output["dist_info"]["wheel"]["root_is_purelib"]
-
-        files = [r["path"] for r in output["dist_info"]["record"] if r["path"].startswith("spam/")]
-        assert osp.join('spam', '__init__.py') in files
-        assert not osp.join('spam', '__main__.py') in files
-        assert fnmatch.filter(files, osp.join('spam', '__main__*.so'))
-        assert not osp.join('spam', 'ham.py') in files
-        assert fnmatch.filter(files, osp.join('spam', 'ham*.so'))
-        assert osp.join('spam', 'egg', '__init__.py') in files
-        assert not osp.join('spam', 'egg', 'bean.py') in files
-        assert fnmatch.filter(files, osp.join('spam', 'egg', 'bean*.so'))
-        assert osp.join('spam', 'egg', 'sausage.py') in files
+    files = list_wheel(wheel_file)
+    assert osp.join('spam', '__init__.py') in files
+    assert not osp.join('spam', '__main__.py') in files
+    assert fnmatch.filter(files, osp.join('spam', '__main__*.so'))
+    assert not osp.join('spam', 'ham.py') in files
+    assert fnmatch.filter(files, osp.join('spam', 'ham*.so'))
+    assert osp.join('spam', 'egg', '__init__.py') in files
+    assert not osp.join('spam', 'egg', 'bean.py') in files
+    assert fnmatch.filter(files, osp.join('spam', 'egg', 'bean*.so'))
+    assert osp.join('spam', 'egg', 'sausage.py') in files
