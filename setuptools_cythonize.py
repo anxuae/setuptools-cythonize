@@ -152,7 +152,7 @@ class CythonizeInstall(install):
         # It seems absurd, but doing that force setuptools to execute the
         # old-style "install" command instead of the "egg_install" one.
         # This is due to frame inspection in setuptools.command.install.install.run()
-        super(CythonizeInstall, self).run()
+        install.run(self)
 
 
 class CythonizeBdist(bdist):
