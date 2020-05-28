@@ -65,11 +65,11 @@ option. The module names matching is done using the function
 
 .. note:: some Python modules starting with ``__`` are excluded from the cythonization.
           This includes:
-
-            - the ``__init__.py`` files which are mandatory to keep the Python
-              packages integrity
-            - the ``__main__.py`` file in order to exectute the package using
-              the command ``python -m ...``
+          
+          - the ``__init__.py`` files which are mandatory to keep the Python
+            packages integrity
+          - the ``__main__.py`` file in order to exectute the package using
+            the command ``python -m ...``
 
 The `Cython compiler options <https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-options>`_
 can also be customized before running the ``setup``:
