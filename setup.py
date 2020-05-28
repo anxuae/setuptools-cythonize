@@ -35,7 +35,7 @@ def main():
         download_url="https://github.com/anxuae/setuptools-cythonize/archive/{}.tar.gz".format(
             setuptools_cythonize.__version__),
         license='MIT license',
-        platforms=['unix', 'linux'],
+        platforms=['unix', 'linux', 'darwin', 'win32'],
         keywords=[
             'setup',
             'install',
