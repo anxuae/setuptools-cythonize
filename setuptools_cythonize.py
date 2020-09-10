@@ -55,10 +55,6 @@ class CythonizeBuild(build, object):  # 'object' inheritance permits @property u
     def finalize_options(self):
         build.finalize_options(self)
 
-        if not self.compiler and platform.system() == 'Windows':
-            log.warn("No compiler provided, set it to mingw32 as default")
-            self.compiler = 'mingw32'
-
 
 class CythonizeBuildPy(build_py):
 
