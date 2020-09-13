@@ -5,9 +5,7 @@ Distribute python modules/packages as binary files (compilation based on Cython)
 """
 
 import sys
-import platform
 from fnmatch import fnmatchcase
-from distutils import log
 from distutils.dist import Distribution
 from distutils.command.build import build
 from distutils.command.bdist import bdist
@@ -21,7 +19,7 @@ from wheel.bdist_wheel import bdist_wheel
 from Cython.Distutils import Extension
 
 
-__version__ = "1.0.5"
+__version__ = "1.0.6"
 
 
 class CythonizeBuild(build, object):  # 'object' inheritance permits @property usage
@@ -108,8 +106,7 @@ class CythonizeBuildPy(build_py):
         return build_py.build_module(self, module_name, module_file, package_name)
 
     def is_to_cythonize(self, package_name, module_name):
-        """Return True if the given module has to be compiled (i.e. does not
-        start with ``__``).
+        """Return True if the given module has to be compiled.
         """
         if not self.cythonize:
             return False
