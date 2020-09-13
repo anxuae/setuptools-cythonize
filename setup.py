@@ -4,7 +4,7 @@
 import sys
 from io import open
 import os.path as osp
-from setuptools import setup
+from setuptools import setup, find_packages, Extension
 
 
 HERE = osp.abspath(osp.dirname(__file__))
@@ -41,8 +41,9 @@ def main():
             'install',
             'compilation',
         ],
-        py_modules=["setuptools_cythonize"],
-        include_package_data=True,
+        packages=find_packages(),
+        ext_modules=[Extension('setuptools_cythonize.cycompat', [
+                                osp.join('setuptools_cythonize', 'cycompat.c')])],
         install_requires=[
             'setuptools>=36.2.0',
             'wheel>=0.29.0',

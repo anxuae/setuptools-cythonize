@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-Distribute python modules/packages as binary files (compilation based on Cython)
-"""
-
 import sys
 from fnmatch import fnmatchcase
 from distutils.dist import Distribution
@@ -12,14 +8,10 @@ from distutils.command.bdist import bdist
 
 from setuptools.command.build_py import build_py
 from setuptools.command.install import install
-from setuptools.command.build_ext import build_ext
 
 from wheel.bdist_wheel import bdist_wheel
 
 from Cython.Distutils import Extension
-
-
-__version__ = "1.0.6"
 
 
 class CythonizeBuild(build, object):  # 'object' inheritance permits @property usage
@@ -203,16 +195,3 @@ class CythonizeBdistWheel(bdist_wheel):
         if build_cmd.cythonize is None:
             build_cmd.cythonize = self.cythonize
         bdist_wheel.finalize_options(self)
-
-
-def get_cmdclass(wheel_default=True):
-
-    if wheel_default:
-        CythonizeBdist.set_default_wheel_format()
-
-    return {'build': CythonizeBuild,
-            'build_py': CythonizeBuildPy,
-            'build_ext': build_ext,
-            'bdist': CythonizeBdist,
-            'bdist_wheel': CythonizeBdistWheel,
-            'install': CythonizeInstall}
