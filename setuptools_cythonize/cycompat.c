@@ -3,9 +3,9 @@
  * =============
  *
  * Use this function in your cythonized application if it setup some signals
- * handlers thanks to the 'signal' module). It periodically checks for pending
- * signals an run signal handlers (this includes raising KeyboardInterrupt if
- * necessary). check_signals is pretty fast, it's OK to call it often.
+ * handlers thanks to the 'signal' module. It checks for pending signals an run
+ * signal handlers (this includes raising KeyboardInterrupt if necessary).
+ * 'check_signals' is pretty fast, it's OK to call it often.
  *
  * Example:
  * --------
