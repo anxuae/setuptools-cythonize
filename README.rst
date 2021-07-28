@@ -86,6 +86,25 @@ can also be customized before running the ``setup``:
         ...
     )
 
+To speedup files compilation, the *cythonization* can be performed in parallel by setting the ``parallel``
+option. The number of CPUs availbale can be retrived using the ``multiprocessing`` module. For instance:
+
+.. code-block:: python
+
+    import multiprocessing
+    from setuptools import setup
+    from setuptools_cythonize import get_cmdclass
+
+    setup(
+        cmdclass=get_cmdclass(),
+        name="my_package",
+        ...
+        options={
+            'build_ext':
+                {'parallel': multiprocessing.cpu_count()}
+        },
+        ...
+    )
 
 Packaging
 ---------
