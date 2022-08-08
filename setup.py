@@ -44,7 +44,7 @@ def main():
         py_modules=["setuptools_cythonize"],
         include_package_data=True,
         install_requires=[
-            'setuptools>=63.4.0',
+            'setuptools>=36.2.0',
             'wheel>=0.29.0',
             'cython>=0.25.2'
         ],
