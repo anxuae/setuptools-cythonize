@@ -163,8 +163,13 @@ class CythonizeBdist(bdist):
         """Set 'wheel' as default format.
         """
         if "wheel" not in cls.format_commands:
-            cls.format_command['wheel'] = ('bdist_wheel', "Python .whl file")
-            cls.format_commands.append('wheel')
+            try:
+                cls.format_commands['wheel'] = ('bdist_wheel', "Python .whl file")
+            except TypeError:
+                # For backward compatibility with older distutils (stdlib)
+                cls.format_command['wheel'] = ('bdist_wheel', "Python .whl file")
+                cls.format_commands.append('wheel')
+            
             for keyos in cls.default_format:
                 cls.default_format[keyos] = 'wheel'
 
