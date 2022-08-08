@@ -19,7 +19,7 @@ from wheel.bdist_wheel import bdist_wheel
 from Cython.Distutils import Extension
 
 
-__version__ = "1.0.6"
+__version__ = "1.0.7"
 
 
 class CythonizeBuild(build, object):  # 'object' inheritance permits @property usage
@@ -169,7 +169,7 @@ class CythonizeBdist(bdist):
                 # For backward compatibility with older distutils (stdlib)
                 cls.format_command['wheel'] = ('bdist_wheel', "Python .whl file")
                 cls.format_commands.append('wheel')
-            
+
             for keyos in cls.default_format:
                 cls.default_format[keyos] = 'wheel'
 
