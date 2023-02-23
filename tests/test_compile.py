@@ -76,7 +76,7 @@ def test_compile(testdir):
     result = testdir.run(sys.executable, setup_file, 'bdist', '--cythonize')
     assert result.ret == 0
 
-    wheel_file = find_wheel(testdir.tmpdir.join('dist'), 'spam-0.0.0-cp*-cp*m*.whl')
+    wheel_file = find_wheel(testdir.tmpdir.join('dist'), 'spam-0.0.0-cp*-cp*.whl')
     assert wheel_file
 
     files = list_wheel(wheel_file)
